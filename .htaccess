@@ -1,0 +1,6 @@
+RewriteEngine On
+
+RewriteRule ^([A-Za-z0-9-]+)/?$  /?controller=$1 [L,QSA]
+RewriteRule ^([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/?$  /?controller=$1&action=$2 [L,QSA]
+RewriteRule ^([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/([0-9-]+)/?$  /?controller=$1&action=$2&id=$3 [L,QSA]
+RewriteRule ^([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/?$  /?controller=$1&action=$2&alias=$3 [L,QSA]
