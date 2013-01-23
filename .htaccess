@@ -1,6 +1,8 @@
 RewriteEngine On
+AddDefaultCharset utf-8
 
-RewriteRule ^([A-Za-z0-9-]+)/?$  /?controller=$1 [L,QSA]
-RewriteRule ^([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/?$  /?controller=$1&action=$2 [L,QSA]
-RewriteRule ^([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/([0-9-]+)/?$  /?controller=$1&action=$2&id=$3 [L,QSA]
-RewriteRule ^([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)/?$  /?controller=$1&action=$2&alias=$3 [L,QSA]
+RewriteRule ^(.)*\.(png|bmp|gif|jpeg|jpg|swf|pdf|doc)$ - [L]
+RewriteCond %{REQUEST_URI} !\.(css¦js¦jpg¦gif)$
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !^(.*)app\/logs(.*)$
+RewriteRule ^(.*)$ /index.php?$1 [L,QSA]

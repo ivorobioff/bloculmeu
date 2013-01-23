@@ -1,3 +1,17 @@
 <div>
-test
+<?php
+
+for ($i = 0; $i < 10; $i ++)
+{
+	$this->block('main/test.phtml', array('test' => $i));
+}
+
+if (is_location('index/index')) echo 'yes';
+?>
+<br/>
+<?=always_set($_POST, 'name', '')?>
 </div>
+<form action="" method="post">
+<input type="input" name="name" />
+<input type="submit" value="submit" />
+</form>
