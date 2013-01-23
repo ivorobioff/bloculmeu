@@ -1,5 +1,5 @@
 <?php
-class Controllers_Abstract
+abstract class Controllers_Abstract
 {
 	protected $_view;
 
