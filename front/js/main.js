@@ -15,10 +15,17 @@ Views.AbstractForm = Class.extend({
 			this.beforeSubmit();
 			$.post(this._url, this._data, $.proxy(function(res){
 				this.afterSubmit(res);
-				if (typeof res.status == 'success'){
+				
+				if (typeof res.status != 'string'){
+					throw 'wrong status';
+				}
+				
+				if (res.status == 'success'){
 					this.success(res.data);
-				} else {
+				} elseif (res.status == 'error') {
 					this.error(res.data);
+				} else {
+					throw 'wrong status';
 				}
 			}, this));
 			return false;
