@@ -42,3 +42,14 @@ function is_ajax()
 	return isset($_SERVER['HTTP_X_REQUESTED_WITH'])
 		&& strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
 }
+
+function is_auth()
+{
+	return isset($_SESSION['user']);
+}
+
+function redirect($url)
+{
+	header('location: '.$url);
+	exit();
+}

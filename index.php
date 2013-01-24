@@ -32,6 +32,8 @@ if ($url_path)
 
 $controller_name = always_set($url_array, 0,  $defaults_config['location']['controller']);
 $action_name = always_set($url_array, 1,  $defaults_config['location']['action']);
+$action_name = str_replace('-', '', $action_name);
+
 
 $_GET = array_merge($_GET, $url_query_array);
 $_GET['controller'] = $controller_name;
