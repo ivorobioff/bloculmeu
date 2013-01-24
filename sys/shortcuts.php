@@ -53,3 +53,13 @@ function redirect($url)
 	header('location: '.$url);
 	exit();
 }
+
+function send_form_success($data = array())
+{
+	echo array_merge(array('status' => 'success'), $data);
+}
+
+function send_form_error($data = array())
+{
+	echo array_merge(array('status' => 'error'), $data);
+}
