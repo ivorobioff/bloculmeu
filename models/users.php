@@ -13,7 +13,7 @@ class Models_Users
 		return $this->_table->insert($data);
 	}
 
-	public function getOne($email, $password)
+	public function get4Auth($email, $password)
 	{
 		$password = md5($password);
 
