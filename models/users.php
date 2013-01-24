@@ -22,4 +22,9 @@ class Models_Users
 			->where('email', $email)
 			->fetchOne();
 	}
+
+	public function checkEmail($email)
+	{
+		return $this->_table->fetchOne('email', $email) ? true : false;
+	}
 }

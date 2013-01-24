@@ -29,15 +29,36 @@ class Controllers_Users extends Controllers_Common
 			return ;
 		}
 
-		$data = $_POST;
+		try
+		{
+			Libs_Validator::setness($_POST, array('fio', 'email', 'password', 'conf_password'));
+			Libs_Validator::emptyness($_POST, array('fio', 'email'));
+			Libs_Validator::password($_POST['password'], $_POST['conf_password']);
+			Libs_Validator::email($_POST['email']);
+		}
 
-		$data['fio'] = trim($data['fio']);
+		catch (Libs_Exceptions_NotPassedValidation $ex)
+		{
+			return send_form_error($ex->getData());
+		}
 
 		$model = new Models_Users();
 
+		if ($model->checkEmail($_POST['email']))
+		{
+			return send_form_error(array('email' => _t('/signup/email-busy')));
+		}
+
+		$data = array(
+			'email' => $_POST['email'],
+			'password' => md5( $_POST['password'])
+		);
+
 		if (!$model->add($data))
 		{
-
+			return send_form_error(array('message' => 'unkown error'));
 		}
+
+		return send_form_success();
 	}
 }

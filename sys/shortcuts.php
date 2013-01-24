@@ -56,10 +56,10 @@ function redirect($url)
 
 function send_form_success($data = array())
 {
-	echo array_merge(array('status' => 'success'), $data);
+	echo json_encode(array('status' => 'success', 'data' => $data));
 }
 
 function send_form_error($data = array())
 {
-	echo array_merge(array('status' => 'error'), $data);
+	echo json_encode(array('status' => 'error', 'data' => $data));
 }

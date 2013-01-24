@@ -3,7 +3,7 @@ var Views = {};
 Views.AbstractForm = Class.extend({
 	
 	_url: '',
-	_id: 'signup-form',
+	_id: '',
 	_el: null,
 	_data: {},
 	
@@ -22,12 +22,13 @@ Views.AbstractForm = Class.extend({
 				
 				if (res.status == 'success'){
 					this.success(res.data);
-				} elseif (res.status == 'error') {
+				} else if (res.status == 'error') {
 					this.error(res.data);
 				} else {
 					throw 'wrong status';
 				}
-			}, this));
+			}, this), 'json');
+			
 			return false;
 		}, this));
 	},
@@ -36,4 +37,19 @@ Views.AbstractForm = Class.extend({
 	afterSubmit: function(data){},
 	success: function(data){},
 	error: function(data){}
+});
+
+
+Views.SignupForm = Views.AbstractForm.extend({
+	_id: 'signup-form',
+	
+	success: function(){
+		alert('cool!');
+	},
+	
+	error: function(data){
+		for (var i in data){
+			alert(i + ': ' + data[i]);
+		}
+	}
 });
