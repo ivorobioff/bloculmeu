@@ -380,6 +380,26 @@ abstract class Libs_ActiveRecord
 		return $return;
 	}
 
+	public function getVector($field, $offset = 0, $default = array())
+	{
+		$return = array();
+
+		if (!$res = $this->fetchAll())
+		{
+			return $default;
+		}
+
+		$count = $offset;
+
+		foreach ($res as $value)
+		{
+			$return[$count] = $value[$field];
+			$count ++;
+		}
+
+		return $return;
+	}
+
 	public function fetchOne($key = null, $value = null)
 	{
 		$res = $this->limit(1)->_fetch($key, $value);

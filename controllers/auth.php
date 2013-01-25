@@ -1,6 +1,8 @@
 <?php
 class Controllers_Auth extends Controllers_Common
 {
+	protected $_require_auth = false;
+
 	public function signup()
 	{
 		if (is_auth())
@@ -8,7 +10,31 @@ class Controllers_Auth extends Controllers_Common
 			redirect_home();
 		}
 
+		$model = new Models_Buildings();
+
+		$this->_view->assign('streets', $model->getStreets());
 		$this->_view->render('auth/signup.phtml');
+	}
+
+	public function getNumbers($params)
+	{
+		if (!$id = intval(always_set($params, 0)))
+		{
+			echo '';
+			return ;
+		}
+
+		$model = new Models_Buildings();
+		$data = $model->getNumbers($id);
+
+		$options = '';
+
+		foreach ($data as $key => $value)
+		{
+			$options .= '<option value='.htmlspecialchars($value).'>'.htmlspecialchars($value).'</option>';
+		}
+
+		echo $options;
 	}
 
 	public function signin()
@@ -89,8 +115,8 @@ class Controllers_Auth extends Controllers_Common
 
 		try
 		{
-			Libs_Validator::setness($_POST, array('fio', 'email', 'password', 'conf_password'));
-			Libs_Validator::emptyness($_POST, array('fio', 'email'));
+			Libs_Validator::setness($_POST, array('fio', 'email', 'password', 'conf_password', 'number', 'street'));
+			Libs_Validator::emptyness($_POST, array('fio', 'email', 'street', 'number'));
 			Libs_Validator::password($_POST['password'], $_POST['conf_password']);
 			Libs_Validator::email($_POST['email']);
 		}
@@ -107,7 +133,19 @@ class Controllers_Auth extends Controllers_Common
 			return send_form_error(array('email' => _t('/signup/email-busy')));
 		}
 
-		if (!$model->add($_POST))
+		if (!$user_id = $model->add($_POST))
+		{
+			return send_form_error(array('message' => 'unkown error'));
+		}
+
+		$building_model = new Models_Buildings();
+
+		if (!$building_info = $building_model->getByAddress($_POST['street'], $_POST['number']))
+		{
+			return send_form_error(array('street' => _t('/signup/building-not-found')));
+		}
+
+		if (!$building_model->assignBuilding($user_id, $building_info['id']))
 		{
 			return send_form_error(array('message' => 'unkown error'));
 		}

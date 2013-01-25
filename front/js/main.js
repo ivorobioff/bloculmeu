@@ -47,13 +47,13 @@ Views.AbstractForm = Class.extend({
 	},
 	
 	disableUI: function(){
-		this._el.find('input').each(function(){
+		this._el.find('input, select, textarea').each(function(){
 			$(this).attr('disabled', 'disabled');
 		});
 	},
 	
 	enableUI: function(){
-		this._el.find('input').each(function(){
+		this._el.find('input, select, textarea').each(function(){
 			$(this).removeAttr('disabled');
 		});
 	},
@@ -74,7 +74,29 @@ Views.AuthForm = Views.AbstractForm.extend({
 	}
 });
 
-Views.SignupForm = Views.AuthForm.extend({	
+Views.SignupForm = Views.AuthForm.extend({
+	
+	_streets_el: null,
+	
+	initialize: function(url){
+		this._super(url);
+		this._streets_el = this._el.find('[name=street]');
+		
+		this._streets_el.change($.proxy(function(){
+			var id = this._streets_el.val();
+			
+			this._el.find('select[name=number] option[value!="0"]').remove();
+			
+			if (id > 0){
+				this.disableUI();
+				$.get('/auth/get-numbers/' + id + '/', $.proxy(function(res){
+					this._el.find('[name=number]').append(res);
+					this.enableUI();
+				}, this));
+			}
+		}, this));
+	},
+	
 	success: function(){
 		location.href = this._redirect_url;
 	}

@@ -4,8 +4,25 @@
 	ФИО: <input type="text" name="fio" /><br/>
 	Мыло: <input type="text" name="email" /><br/>
 	Пароль: <input type="password" type="password" name="password" /><br />
-	Подтвердить пароль: <input type="password" type="password" name="conf_password" />
-	<br />
+	Подтвердить пароль: <input type="password" type="password" name="conf_password" /><br />
+	<br/>
+	Улица: <select name="street">
+		<option value="0">Выбрать улицу:</option>
+		<?php
+			foreach ($this->_params['streets'] as $key => $street):
+			?>
+
+			<option value="<?=$key?>"><?=htmlspecialchars($street)?></option>
+
+			<?php
+			endforeach;
+		?>
+
+	</select> <select name="number">
+		<option value="0">Номер дома:</option>
+	</select>
+	<br/>
+	<br/>
 	<input type="submit" value="Submit" /> <a href="<?=_url('/auth/signin/')?>">Sign-in</a>
 </form>
 </div>

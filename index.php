@@ -34,6 +34,10 @@ $controller_name = always_set($url_array, 0,  $defaults_config['location']['cont
 $action_name = always_set($url_array, 1,  $defaults_config['location']['action']);
 $action_name = str_replace('-', '', $action_name);
 
+array_shift($url_array);
+array_shift($url_array);
+
+$other_params = $url_array;
 
 $_GET = array_merge($_GET, $url_query_array);
 $_GET['controller'] = strtolower($controller_name);
@@ -64,4 +68,4 @@ if (!method_exists($controller_object, $action_name))
 	return ;
 }
 
-$controller_object->{$action_name}();
+$controller_object->{$action_name}($other_params);

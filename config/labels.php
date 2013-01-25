@@ -8,4 +8,5 @@ $labels = array(
 
 	'/signup/email-busy' => 'Е-mail уже занят',
 	'/signin/no-user-found' => 'Не верный e-mail или пароль',
+	'/signin/building-not-found' => 'Здание не найдено',
 );
