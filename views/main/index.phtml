@@ -1,0 +1,6 @@
+<div>
+	<h2>Home</h2>
+	<?php if (is_auth()): ?>
+	Привет, <?=$_SESSION['user']['fio']; ?>
+	<?php endif; ?>
+</div>

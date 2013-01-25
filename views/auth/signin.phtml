@@ -1,0 +1,17 @@
+<div>
+<h2>Sign-in</h2>
+<form action="/auth/do-signin/" id="single-form">
+	Мыло: <input type="text" name="email" /><br/>
+	Пароль: <input type="password" type="password" name="password" /><br />
+	<br />
+	<label><input type="checkbox" name="remember_me" value="1" /> Запомнить меня</label>
+	<br/>
+	<br/>
+	<input type="submit" value="Submit" /> <a href="<?=_url('/auth/signup/')?>">Sign-up</a>
+</form>
+</div>
+<script type="text/javascript">
+	$(function(){
+		new Views.SigninForm('<?=isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '/'?>');
+	})
+</script>
