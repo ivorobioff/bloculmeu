@@ -28,6 +28,8 @@ class Libs_View
 
 	public function render($path = '')
 	{
+		$path = trim(trim($path, '/'));
+
 		if ($path)
 		{
 			$this->_view =  BASE_DIR.'/views/'.$path;

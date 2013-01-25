@@ -36,10 +36,10 @@ $action_name = str_replace('-', '', $action_name);
 
 
 $_GET = array_merge($_GET, $url_query_array);
-$_GET['controller'] = $controller_name;
-$_GET['action'] = $action_name;
+$_GET['controller'] = strtolower($controller_name);
+$_GET['action'] = strtolower($action_name);
 
-if (!file_exists(BASE_DIR.'/controllers/'.strtolower($controller_name).'.php'))
+if (!file_exists(BASE_DIR.'/controllers/'.$controller_name.'.php'))
 {
 	include_once '/sys/404.php';
 

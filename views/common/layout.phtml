@@ -10,6 +10,10 @@
 <title><?=$this->_params['title']?></title>
 </head>
 <body>
+	<?php if(is_auth()):?>
+	<a href="<?=_url('/auth/logout/')?>">Logout</a>
+	<br/>
+	<?php endif;?>
 	<?=$this->view()?>
 </body>
 </html>

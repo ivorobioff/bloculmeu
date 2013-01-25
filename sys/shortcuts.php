@@ -54,6 +54,16 @@ function redirect($url)
 	exit();
 }
 
+function redirect_home()
+{
+	redirect('/');
+}
+
+function redirect_signin()
+{
+	redirect(_url('/auth/signin/'));
+}
+
 function send_form_success($data = array())
 {
 	echo json_encode(array('status' => 'success', 'data' => $data));

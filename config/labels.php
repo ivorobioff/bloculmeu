@@ -7,4 +7,5 @@ $labels = array(
 	'/validator/wrong-email' => 'Не верный формат электроного адреса',
 
 	'/signup/email-busy' => 'Е-mail уже занят',
+	'/signin/no-user-found' => 'Не верный e-mail или пароль',
 );

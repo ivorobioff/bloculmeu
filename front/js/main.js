@@ -1,9 +1,10 @@
 var Views = {};
+var Urls = {};
 
 Views.AbstractForm = Class.extend({
 	
 	_url: '',
-	_id: '',
+	_id: 'single-form',
 	_el: null,
 	_data: {},
 	
@@ -33,23 +34,55 @@ Views.AbstractForm = Class.extend({
 		}, this));
 	},
 	
-	beforeSubmit: function(){},
-	afterSubmit: function(data){},
-	success: function(data){},
-	error: function(data){}
-});
-
-
-Views.SignupForm = Views.AbstractForm.extend({
-	_id: 'signup-form',
-	
-	success: function(){
-		alert('cool!');
+	beforeSubmit: function(){
+		this.disableUI();
 	},
 	
+	afterSubmit: function(data){},
+	success: function(data){},
+	
 	error: function(data){
+		this._showErrors(data);
+		this.enableUI();
+	},
+	
+	disableUI: function(){
+		this._el.find('input').each(function(){
+			$(this).attr('disabled', 'disabled');
+		});
+	},
+	
+	enableUI: function(){
+		this._el.find('input').each(function(){
+			$(this).removeAttr('disabled');
+		});
+	},
+	
+	_showErrors: function(data){
 		for (var i in data){
 			alert(i + ': ' + data[i]);
 		}
+	}
+});
+
+Views.AuthForm = Views.AbstractForm.extend({
+	_redirect_url: '',
+
+	initialize: function(url){
+		this._super();
+		this._redirect_url = url;
+	}
+});
+
+Views.SignupForm = Views.AuthForm.extend({	
+	success: function(){
+		location.href = this._redirect_url;
+	}
+});
+
+
+Views.SigninForm = Views.AuthForm.extend({
+	success: function(){
+		location.href = this._redirect_url;
 	}
 });

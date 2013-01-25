@@ -13,7 +13,7 @@ abstract class Libs_ActiveRecord
 	 */
 	protected $_table_name;
 	protected $_table_alias = '';
-	protected $_order_by = 'id ASC';
+	protected $_order_by = '';
 	protected $_primary_key = 'id';
 
 	/**
@@ -271,7 +271,7 @@ abstract class Libs_ActiveRecord
 		return $this;
 	}
 
-	public function join(\System\Db\ActiveRecord $table, $cond, $type = 'LEFT JOIN')
+	public function join(Libs_ActiveRecord $table, $cond, $type = 'LEFT JOIN')
 	{
 		$this->_query_buffer['join'][] = $type.' '.$table->getTableName().' '.$table->prepareAlias().' ON '.$cond;
 
@@ -498,6 +498,11 @@ abstract class Libs_ActiveRecord
 	{
 		if (!$this->_query_buffer['orderBy'])
 		{
+			if (!$this->_order_by)
+			{
+				return '';
+			}
+
 			return	'ORDER BY '.$this->_order_by;
 		}
 
