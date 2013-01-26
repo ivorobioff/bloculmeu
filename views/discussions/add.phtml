@@ -1,0 +1,53 @@
+<div>
+	<h2>Создать дискуссию</h2>
+	<form action="/discussions/do-add/" id="single-form">
+		<table>
+			<tr>
+				<td>Тип: </td>
+				<td>
+					<select name="type">
+					<?php
+						foreach ($this->_params['types'] as $type => $title)
+						{
+						?>
+							<option value="<?=$type?>"><?=$title?></option>
+						<?php
+						}
+					?>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Категория: </td>
+				<td>
+					<select name="category">
+					<?php
+						foreach ($this->_params['categories'] as $name => $title)
+						{
+							$selected = $this->_params['current_category'] == $name ? 'selected="selected"' : '';
+						?>
+							<option <?=$selected?> value="<?=$name?>"><?=$title?></option>
+						<?php
+						}
+					?>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Текст: </td>
+				<td>
+					<textarea name="text" style="height: 100px; width: 300px;"></textarea>
+				</td>
+			</tr>
+			<tr>
+				<td style="text-align: center;" colspan="2"><br/><input type="submit" value="Создать" /></td>
+			</tr>
+		</table>
+	</form>
+</div>
+
+<script type="text/javascript">
+	$(function(){
+		new Views.NewDiscussionForm('<?=_url('/discussions/index/')?>');
+	});
+</script>

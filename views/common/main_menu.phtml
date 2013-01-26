@@ -1,3 +1,6 @@
+<select>
+	<option value="<?=$this->_params['current_building_id']?>"><?=$this->_params['current_building_address']?></option>
+</select>
 <?php
 	$menu_items[] = array(
 		'url' => _url('/discussions/index/'),
@@ -10,3 +13,4 @@
 	);
 
 	Views_Helpers_MenuHeader::draw($menu_items);
+?>

@@ -66,16 +66,20 @@ Views.AbstractForm = Class.extend({
 	}
 });
 
-Views.AuthForm = Views.AbstractForm.extend({
+Views.AutoRedirectForm = Views.AbstractForm.extend({
 	_redirect_url: '',
 
 	initialize: function(url){
 		this._super();
 		this._redirect_url = url;
+	},
+	
+	success: function(){
+		location.href = this._redirect_url;
 	}
 });
 
-Views.SignupForm = Views.AuthForm.extend({
+Views.SignupForm = Views.AutoRedirectForm.extend({
 
 	_streets_el: null,
 	
@@ -100,16 +104,10 @@ Views.SignupForm = Views.AuthForm.extend({
 				}, this));
 			}
 		}, this));
-	},
-	
-	success: function(){
-		location.href = this._redirect_url;
 	}
 });
 
 
-Views.SigninForm = Views.AuthForm.extend({
-	success: function(){
-		location.href = this._redirect_url;
-	}
-});
+Views.SigninForm = Views.AutoRedirectForm.extend({});
+
+Views.NewDiscussionForm = Views.AutoRedirectForm.extend({});

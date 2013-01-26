@@ -45,4 +45,14 @@ class Libs_Validator
 			throw new Libs_Exceptions_NotPassedValidation(array('email' => _t('/validator/wrong-email')));
 		}
 	}
+
+	static public function discussionCategory($category)
+	{
+		$categories = array_keys(Libs_Handbooks_Discussions::getCategories());
+
+		if (!in_array($category, $categories))
+		{
+			throw new Libs_Exceptions_NotPassedValidation(array('category' => _t('/validator/wrong-discussion-category')));
+		}
+	}
 }

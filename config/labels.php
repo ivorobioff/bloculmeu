@@ -5,6 +5,7 @@ $labels = array(
 	'/validator/undefined' => 'Не найдено поле',
 	'/validator/empty' => 'Данное поле не может быть пустым',
 	'/validator/wrong-email' => 'Не верный формат электроного адреса',
+	'/validator/wrong-discussion-category' => 'Неверно задана катаегория дискуссии',
 
 	'/signup/email-busy' => 'Е-mail уже занят',
 
@@ -16,4 +17,6 @@ $labels = array(
 	'/discussions/categories/survey' => 'Опрос',
 	'/discussions/categories/offer' => 'Предложение',
 	'/discussions/categories/problem' => 'Проблема',
+	'/discussions/types/inner' => 'Внутренняя',
+	'/discussions/types/outter' => 'Внешняя'
 );

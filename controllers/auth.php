@@ -50,7 +50,7 @@ class Controllers_Auth extends Controllers_Common
 
 			if ($data = $model->getByHashedId($hashed_id))
 			{
-				$_SESSION['user'] = $data;
+				$_SESSION['user'] = $model->appendBasicData($data);
 				redirect(isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '/');
 			}
 		}
@@ -101,7 +101,7 @@ class Controllers_Auth extends Controllers_Common
 			setcookie('remember_me', md5($data['id']), time() + (86400 * 31), '/', $domain);
 		}
 
-		$_SESSION['user'] = $data;
+		$_SESSION['user'] = $model->appendBasicData($data);
 
 		return send_form_success();
 	}
@@ -145,7 +145,7 @@ class Controllers_Auth extends Controllers_Common
 			return send_form_error(array('street' => _t('/signup/building-not-found')));
 		}
 
-		if (!$model->assignBuilding($user_id, $building_info['id']))
+		if (!$model->assignBuilding($user_id, $building_info['id'], true))
 		{
 			return send_form_error(array('message' => 'unkown error'));
 		}

@@ -3,7 +3,7 @@ class Models_Users
 {
 	private $_table;
 	private $_profile_table;
-	protected $_users_buildings_table;
+	private $_users_buildings_table;
 
 	public function  __construct()
 	{
@@ -12,6 +12,7 @@ class Models_Users
 		$this->_profile_table = new Db_Profiles();
 		$this->_profile_table->setAlias('p');
 		$this->_users_buildings_table = new Db_UsersBuildings();
+		$this->_users_buildings_table->setAlias('ub');
 	}
 
 	public function add($data)
@@ -60,8 +61,35 @@ class Models_Users
 			->fetchOne('MD5(u.id)', $id);
 	}
 
-	public function assignBuilding($user_id, $building_id)
+	public function assignBuilding($user_id, $building_id, $is_current = false)
 	{
-		return $this->_users_buildings_table->insert(array('user_id' => $user_id, 'building_id' => $building_id));
+		$data = array(
+			'user_id' => $user_id,
+			'building_id' => $building_id,
+			'is_current' => $is_current ? 1 : 0
+		);
+		return $this->_users_buildings_table->insert($data);
+	}
+
+	public function appendBasicData(array $data)
+	{
+		$user_id = $data['id'];
+
+		$buildings_table = new Db_Buildings();
+		$buildings_table->setAlias('b');
+		$streets_table = new Db_Streets();
+		$streets_table->setAlias('s');
+
+		$current_building = $this->_users_buildings_table
+			->select('b.id, b.number, b.street_id, s.name')
+			->where('ub.user_id', $user_id)
+			->where('ub.is_current', 1)
+			->join($buildings_table, 'b.id = ub.building_id')
+			->join($streets_table, 'b.street_id = s.id')
+			->fetchOne();
+
+		$data['current_building'] = $current_building;
+
+		return $data;
 	}
 }

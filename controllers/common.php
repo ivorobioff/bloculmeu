@@ -12,6 +12,14 @@ abstract class Controllers_Common
 		$this->_view = Libs_View::getInstance();
 		$this->_view->assign('title', 'Bloculmeu 1.0');
 		$this->_view->setLayout('common/layout.phtml');
+
+		if (is_auth())
+		{
+			$building_address =  Models_Currents::getBuildingInfo('name').' '. Models_Currents::getBuildingInfo('number');
+			$this->_view->assign('fio', Models_Currents::getUserInfo('fio'));
+			$this->_view->assign('current_building_id', Models_Currents::getBuildingInfo('id'));
+			$this->_view->assign('current_building_address', $building_address);
+		}
 	}
 
 	private function _checkAuth()
