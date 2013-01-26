@@ -59,6 +59,7 @@ Views.AbstractForm = Class.extend({
 	},
 	
 	_showErrors: function(data){
+		
 		for (var i in data){
 			alert(i + ': ' + data[i]);
 		}
@@ -75,11 +76,15 @@ Views.AuthForm = Views.AbstractForm.extend({
 });
 
 Views.SignupForm = Views.AuthForm.extend({
-	
+
 	_streets_el: null,
 	
+	/*
+	 * TODO: возможно надо будет изменить метод подгрузки номеров зданий.
+	 */
 	initialize: function(url){
 		this._super(url);
+		
 		this._streets_el = this._el.find('[name=street]');
 		
 		this._streets_el.change($.proxy(function(){

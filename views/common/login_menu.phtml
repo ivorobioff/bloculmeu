@@ -1,0 +1,12 @@
+<?php
+$menu_items[] = array(
+	'url' => _url('/auth/signin/'),
+	'title' => 'Авторизация'
+);
+
+$menu_items[] = array(
+	'url' => _url('/auth/signup/'),
+	'title' => 'Регистрация'
+);
+
+Views_Helpers_MenuHeader::draw($menu_items);

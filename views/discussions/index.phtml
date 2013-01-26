@@ -1,0 +1,25 @@
+<div>
+	<div>
+		<h2 style="float: left; padding:0; margin:0;">Дискуссии</h2>
+		<div style="float: right;">
+			<select onchange="add_discussion(this)">
+				<option value="0"><?=_t('/discussions/add');?></option>
+				<?php
+					foreach ($this->_params['discussion_categories'] as $name => $title)
+					{
+					?>
+					<option value="<?=$name?>"><?=$title;?></option>
+					<?php
+					}
+				?>
+			</select>
+		</div>
+		<br class="clr" />
+	</div>
+</div>
+<script type="text/javascript">
+function add_discussion(el){
+	var $el = $(el);
+	location.href='/discussions/add/' + $el.val() + '/';
+}
+</script>

@@ -3,13 +3,11 @@ class Models_Buildings
 {
 	protected $_table;
 	protected $_street_table;
-	protected $_users_buildings_table;
 
 	public function __construct()
 	{
 		$this->_table = new Db_Buildings();
 		$this->_street_table = new Db_Streets();
-		$this->_users_buildings_table = new Db_UsersBuildings();
 	}
 
 	public function getStreets()
@@ -31,10 +29,5 @@ class Models_Buildings
 			->where('street_id', $street_id)
 			->where('`number`', $numder)
 			->fetchOne();
-	}
-
-	public function assignBuilding($user_id, $building_id)
-	{
-		return $this->_users_buildings_table->insert(array('user_id' => $user_id, 'building_id' => $building_id));
 	}
 }

@@ -10,10 +10,37 @@
 <title><?=$this->_params['title']?></title>
 </head>
 <body>
-	<?php if(is_auth()):?>
-	<a href="<?=_url('/auth/logout/')?>">Logout</a>
-	<br/>
-	<?php endif;?>
-	<?=$this->view()?>
+	<div id="ps-container">
+		<div id="container">
+			<div id="header">
+				<div>
+				<?php
+					if (is_auth())
+					{
+						$this->block('common/main_menu.phtml');
+					}
+					else
+					{
+						$this->block('common/login_menu.phtml');
+					}
+
+				?>
+				</div>
+			</div>
+			<div id="content">
+				<?php
+					if (is_auth())
+					{
+						$this->block('common/content.phtml');
+					}
+					else
+					{
+						$this->block('common/login_content.phtml');
+					}
+				?>
+			</div>
+			<div id="footer">ivorobioff <?=date('Y');?></div>
+		</div>
+	</div>
 </body>
 </html>

@@ -145,7 +145,7 @@ class Controllers_Auth extends Controllers_Common
 			return send_form_error(array('street' => _t('/signup/building-not-found')));
 		}
 
-		if (!$building_model->assignBuilding($user_id, $building_info['id']))
+		if (!$model->assignBuilding($user_id, $building_info['id']))
 		{
 			return send_form_error(array('message' => 'unkown error'));
 		}

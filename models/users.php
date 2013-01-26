@@ -3,6 +3,7 @@ class Models_Users
 {
 	private $_table;
 	private $_profile_table;
+	protected $_users_buildings_table;
 
 	public function  __construct()
 	{
@@ -10,6 +11,7 @@ class Models_Users
 		$this->_table->setAlias('u');
 		$this->_profile_table = new Db_Profiles();
 		$this->_profile_table->setAlias('p');
+		$this->_users_buildings_table = new Db_UsersBuildings();
 	}
 
 	public function add($data)
@@ -56,5 +58,10 @@ class Models_Users
 		return  $this->_table
 			->join($this->_profile_table, 'u.id=p.user_id')
 			->fetchOne('MD5(u.id)', $id);
+	}
+
+	public function assignBuilding($user_id, $building_id)
+	{
+		return $this->_users_buildings_table->insert(array('user_id' => $user_id, 'building_id' => $building_id));
 	}
 }

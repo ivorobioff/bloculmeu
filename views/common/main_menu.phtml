@@ -1,0 +1,12 @@
+<?php
+	$menu_items[] = array(
+		'url' => _url('/discussions/index/'),
+		'title' => 'Дискуссии'
+	);
+
+	$menu_items[] = array(
+		'url' => _url('/auth/logout/'),
+		'title' => 'Выйти'
+	);
+
+	Views_Helpers_MenuHeader::draw($menu_items);

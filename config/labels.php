@@ -7,6 +7,13 @@ $labels = array(
 	'/validator/wrong-email' => 'Не верный формат электроного адреса',
 
 	'/signup/email-busy' => 'Е-mail уже занят',
+
 	'/signin/no-user-found' => 'Не верный e-mail или пароль',
 	'/signin/building-not-found' => 'Здание не найдено',
+
+	'/discussions/add' => 'Добавить',
+	'/discussions/categories/message' => 'Сообщение',
+	'/discussions/categories/survey' => 'Опрос',
+	'/discussions/categories/offer' => 'Предложение',
+	'/discussions/categories/problem' => 'Проблема',
 );
