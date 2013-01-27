@@ -5,6 +5,8 @@ class Controllers_Discussions extends Controllers_Common
 	{
 		$model = new Models_Discussions();
 
+		$this->_view->assign('discussions_list', $model->get4Main());
+
 		$this->_view->assign('discussion_categories', Libs_Handbooks_Discussions::getCategories());
 		$this->_view->render('discussions/index.phtml');
 	}
@@ -44,8 +46,8 @@ class Controllers_Discussions extends Controllers_Common
 
 		$data = $_POST;
 
-		$data['user_id'] = Models_Currents::getUserInfo('id');
-		$data['building_id'] = Models_Currents::getBuildingInfo('id');
+		$data['user_id'] = Db_Currents::getUserInfo('id');
+		$data['building_id'] = Db_Currents::getBuildingInfo('id');
 
 		if (!$model->add($data))
 		{

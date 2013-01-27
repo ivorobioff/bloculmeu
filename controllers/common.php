@@ -15,9 +15,9 @@ abstract class Controllers_Common
 
 		if (is_auth())
 		{
-			$building_address =  Models_Currents::getBuildingInfo('name').' '. Models_Currents::getBuildingInfo('number');
-			$this->_view->assign('fio', Models_Currents::getUserInfo('fio'));
-			$this->_view->assign('current_building_id', Models_Currents::getBuildingInfo('id'));
+			$building_address =  Db_Currents::getBuildingInfo('name').' '. Db_Currents::getBuildingInfo('number');
+			$this->_view->assign('fio', Db_Currents::getUserInfo('fio'));
+			$this->_view->assign('current_building_id', Db_Currents::getBuildingInfo('id'));
 			$this->_view->assign('current_building_address', $building_address);
 		}
 	}

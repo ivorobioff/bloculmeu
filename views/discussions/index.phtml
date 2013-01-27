@@ -16,8 +16,12 @@
 		</div>
 		<br class="clr" />
 		<div style="margin-top: 30px;">
-			<?=$this->block('discussions/item.phtml')?>
-			<?=$this->block('discussions/item.phtml')?>
+			<?php
+				foreach ($this->_params['discussions_list'] as $item)
+				{
+					$this->block('discussions/item.phtml', $item);
+				}
+			?>
 		</div>
 	</div>
 </div>

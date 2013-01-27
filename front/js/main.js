@@ -1,7 +1,16 @@
 var Views = {};
 var Urls = {};
 
-Views.AbstractForm = Class.extend({
+Views.Abstract = Class.extend({
+	_id: '',
+	_el: null,
+	
+	initialize: function(){
+		this._el = $('#' + this._id);
+	}
+});
+
+Views.AbstractForm = Views.Abstract.extend({
 	
 	_url: '',
 	_id: 'single-form',
@@ -9,7 +18,7 @@ Views.AbstractForm = Class.extend({
 	_data: {},
 	
 	initialize: function(){
-		this._el = $('#' + this._id);
+		this._super();
 		this._url = this._el.attr('action');
 		this._el.submit($.proxy(function(){
 			this._data = this._el.serialize();
@@ -79,16 +88,16 @@ Views.AutoRedirectForm = Views.AbstractForm.extend({
 	}
 });
 
-Views.SignupForm = Views.AutoRedirectForm.extend({
 
+/*
+ * TODO: возможно надо будет изменить метод подгрузки номеров зданий.
+ */
+Views.StreetNumbersLoader = Views.Abstract.extend({
 	_streets_el: null,
+	_id: 'buidling-address',
 	
-	/*
-	 * TODO: возможно надо будет изменить метод подгрузки номеров зданий.
-	 */
-	initialize: function(url){
-		this._super(url);
-		
+	initialize: function(){
+		this._super();
 		this._streets_el = this._el.find('[name=street]');
 		
 		this._streets_el.change($.proxy(function(){
@@ -98,16 +107,50 @@ Views.SignupForm = Views.AutoRedirectForm.extend({
 			
 			if (id > 0){
 				this.disableUI();
-				$.get('/auth/get-numbers/' + id + '/', $.proxy(function(res){
+				$.get('/buildings/get-numbers/' + id + '/', $.proxy(function(res){
 					this._el.find('[name=number]').append(res);
 					this.enableUI();
 				}, this));
 			}
 		}, this));
+	},
+	
+	disableUI: function(){
+		this._el.find('select').attr('disabled', 'disabled');
+	},
+	
+	enableUI: function(){
+		this._el.find('select').removeAttr('disabled');
 	}
 });
 
+Views.SignupForm = Views.AutoRedirectForm.extend({});
 
 Views.SigninForm = Views.AutoRedirectForm.extend({});
 
 Views.NewDiscussionForm = Views.AutoRedirectForm.extend({});
+
+Views.CourtyardForm = Views.AbstractForm.extend({
+	success: function(data){
+		Views.CourtyardBuildings.getInstance().addBuilding(data);
+		this.enableUI();
+	}
+});
+
+Views.CourtyardBuildings = Views.Abstract.extend({
+	_el: 'buildings-container',
+	
+	addBuilding: function(data){
+		alert('Building has been added !');
+	},
+});
+
+Views.CourtyardBuildings._INSTANCE = null;
+
+Views.CourtyardBuildings.getInstance = function(){
+	if (Views.CourtyardBuildings._INSTANCE == null){
+		Views.CourtyardBuildings._INSTANCE = new Views.CourtyardBuildings();
+	}
+	
+	return Views.CourtyardBuildings._INSTANCE;
+}

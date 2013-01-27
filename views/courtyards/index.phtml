@@ -1,0 +1,38 @@
+<div>
+	<h2>Мой двор</h2>
+	<div>
+		<form action="/courtyards/add-building" id="single-form">
+			<span  id="buidling-address">
+			<select name="street">
+			<option value="0">Выбрать улицу:</option>
+			<?php
+				foreach ($this->_params['streets'] as $key => $street):
+				?>
+
+				<option value="<?=$key?>"><?=htmlspecialchars($street)?></option>
+
+				<?php
+				endforeach;
+			?>
+			</select>
+			<select name="number">
+				<option value="0">Номер дома:</option>
+			</select>
+			</span>
+			&nbsp;&nbsp;&nbsp;
+			<input type="submit" value="Добавить дом" />
+		</form>
+	</div>
+	<br/>
+	<div style="background-color: #FBFBFB; border: 1px solid #999999; margin-bottom: 5px;">
+		<div style="padding: 10px;">
+			Stefan cel mare 12
+		</div>
+	</div>
+</div>
+<script>
+$(function(){
+	new Views.CourtyardForm();
+	new Views.StreetNumbersLoader();
+});
+</script>

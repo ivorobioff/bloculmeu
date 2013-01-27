@@ -400,6 +400,19 @@ abstract class Libs_ActiveRecord
 		return $return;
 	}
 
+	/**
+	 * Проставя проверка на наличие результата
+	 * @param unknown_type $key
+	 * @param unknown_type $value
+	 * @return boolean
+	 */
+	public function check($key = null, $value = null)
+	{
+		$res = $this->fetchOne($key, $value);
+
+		return $res ? true : false;
+	}
+
 	public function fetchOne($key = null, $value = null)
 	{
 		$res = $this->limit(1)->_fetch($key, $value);

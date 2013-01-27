@@ -1,0 +1,9 @@
+<div>
+	<h2>Соседи</h2>
+	<?php
+		foreach ($this->_params['neighbors_list'] as $item)
+		{
+			$this->block('neighbors/item.phtml', $item);
+		}
+	?>
+</div>

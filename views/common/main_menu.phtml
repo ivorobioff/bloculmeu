@@ -8,9 +8,14 @@
 	);
 
 	$menu_items[] = array(
+		'url' => _url('/neighbors/index/'),
+		'title' => 'Соседи'
+	);
+
+	$menu_items[] = array(
 		'url' => _url('/auth/logout/'),
 		'title' => 'Выйти'
 	);
 
-	Views_Helpers_MenuHeader::draw($menu_items);
+	Views_Helpers_Menu::drawHeaderMenu($menu_items);
 ?>

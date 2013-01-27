@@ -16,27 +16,6 @@ class Controllers_Auth extends Controllers_Common
 		$this->_view->render('auth/signup.phtml');
 	}
 
-	public function getNumbers($params)
-	{
-		if (!$id = intval(always_set($params, 0)))
-		{
-			echo '';
-			return ;
-		}
-
-		$model = new Models_Buildings();
-		$data = $model->getNumbers($id);
-
-		$options = '';
-
-		foreach ($data as $key => $value)
-		{
-			$options .= '<option value='.htmlspecialchars($value).'>'.htmlspecialchars($value).'</option>';
-		}
-
-		echo $options;
-	}
-
 	public function signin()
 	{
 		if (is_auth())

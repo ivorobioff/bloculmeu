@@ -1,5 +1,9 @@
 <?php
-class Models_Currents
+/**
+ * Информация о  текущем пользователе
+ * @author Igor Vorobioff<i_am_vib@yahoo.com>
+ */
+class Db_Currents
 {
 	static public function getUserInfo($key)
 	{

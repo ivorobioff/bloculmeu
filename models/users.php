@@ -51,7 +51,7 @@ class Models_Users
 
 	public function checkEmail($email)
 	{
-		return $this->_table->fetchOne('email', $email) ? true : false;
+		return $this->_table->check('email', $email);
 	}
 
 	public function getByHashedId($id)

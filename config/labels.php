@@ -18,5 +18,8 @@ $labels = array(
 	'/discussions/categories/offer' => 'Предложение',
 	'/discussions/categories/problem' => 'Проблема',
 	'/discussions/types/inner' => 'Внутренняя',
-	'/discussions/types/outter' => 'Внешняя'
+	'/discussions/types/outter' => 'Внешняя',
+
+	'/courtyards/building-exists' => 'Выбраный дом уже есть у вас во дворе',
+		'/courtyards/users-building' => 'Выбраный дом не может быть вашим домом'
 );

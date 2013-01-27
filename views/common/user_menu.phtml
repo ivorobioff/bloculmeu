@@ -1,0 +1,22 @@
+<?php
+	$menu_items[] = array(
+		'url' => '#',
+		'title' => 'Профайл'
+	);
+
+	$menu_items[] = array(
+		'url' => '#',
+		'title' => 'Переписки'
+	);
+
+	$menu_items[] = array(
+		'url' => _url('/courtyards/index/'),
+		'title' => 'Мой двор'
+	);
+	$menu_items[] = array(
+		'url' => _url('/auth/logout/'),
+		'title' => 'Настройки'
+	);
+
+	Views_Helpers_Menu::drawUserMenu($menu_items);
+?>

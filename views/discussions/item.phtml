@@ -1,7 +1,42 @@
-<div style="background-color: #FBFBFB; border: 1px solid #999999; margin-bottom: 20px;">
+<?php
+	$category = $this->_params['discussion_categories'][$params['category']];
+
+	//TODO: Надо будет переделать с появление дизайна
+	$color = 'black';
+	switch ($params['category'])
+	{
+		case 'message':
+			$color = 'blue';
+			break;
+		case 'survey':
+			$color = 'brown';
+			break;
+		case 'offer':
+			$color = 'green';
+			break;
+		case 'problem':
+			$color = 'red';
+			break;
+		default:
+			$color = 'black';
+			break;
+	}
+?>
+<div style="background-color: #FBFBFB; border: 1px solid #999999; margin-bottom: 5px;">
 	<div style="padding: 5px; padding-bottom: 15px;">
-		<div><a href="#">Igor Vorobioff</a></div>
-		<h3 style="color: red">Проблема</h3>
-		<div>Незадачливый водитель неудачно свернул налево. В результате автомобиль столкнулся со встречной машиной. Инцидент произошел на одной из столичных улиц в секторе Чеканы.</div>
+		<div><a href="#"><?=htmlspecialchars($params['fio'])?></a></div>
+		<h3 style="color: <?=$color?>"><?=$category?></h3>
+		<div><?=htmlspecialchars($params['text'])?></div>
 	</div>
+</div>
+<div style="margin-bottom: 20px; text-align: right;">
+	<?php
+		if ($params['is_owner'])
+		{
+		?>
+		<a href="#">Удалить</a>&nbsp;&nbsp;&nbsp;
+		<a href="#">Редактировать</a>
+		<?php
+		}
+	?>
 </div>
