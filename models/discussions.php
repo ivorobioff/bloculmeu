@@ -11,7 +11,47 @@ class Models_Discussions
 
 	public function add($data)
 	{
-		return $this->_table->insert($data);
+		$type = $data['type'];
+
+		unset($data['type']);
+
+		$id = $this->_table->insert($data);
+
+		if ($type)
+		{
+			$this->_relateCourtyardTo($id);
+		}
+
+		return $id;
+	}
+
+	private function _relateCourtyardTo($id)
+	{
+		$courtyard_table = new Db_Courtyards();
+		$courtyards_ids = $courtyard_table
+			->select('building_id')
+			->where('user_id', Db_Currents::getUserInfo('id'))
+			->where('current_building_id', Db_Currents::getBuildingInfo('id'))
+			->getVector('building_id');
+
+		if (!$courtyards_ids)
+		{
+			return ;
+		}
+
+		$many_data = array();
+
+		foreach ($courtyards_ids as $value)
+		{
+			$many_data[] = array(
+				'building_id' => $value,
+				'discussion_id' => $id
+			);
+		}
+
+		$discussions_buildings_table = new Db_DiscussionsBuildings();
+		$discussions_buildings_table->insertAll($many_data);
+
 	}
 
 	public function get4Main()

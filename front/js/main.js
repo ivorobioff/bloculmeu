@@ -132,16 +132,16 @@ Views.NewDiscussionForm = Views.AutoRedirectForm.extend({});
 
 Views.CourtyardForm = Views.AbstractForm.extend({
 	success: function(data){
-		Views.CourtyardBuildings.getInstance().addBuilding(data);
+		Views.CourtyardBuildings.getInstance().addBuilding(data.html);
 		this.enableUI();
 	}
 });
 
 Views.CourtyardBuildings = Views.Abstract.extend({
-	_el: 'buildings-container',
+	_id: 'buildings-container',
 	
-	addBuilding: function(data){
-		alert('Building has been added !');
+	addBuilding: function(html){
+		this._el.prepend(html);
 	},
 });
 

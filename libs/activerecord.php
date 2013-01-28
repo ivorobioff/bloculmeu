@@ -34,6 +34,8 @@ abstract class Libs_ActiveRecord
 
 	private $_last_query = '';
 
+	private $_query_return = false;
+
 	static private $_db;
 
 	public function __construct()
@@ -53,6 +55,12 @@ abstract class Libs_ActiveRecord
 		self::$_db->set_charset('utf8');
 
 		$this->clear();
+	}
+
+	public function setQueryReturnMode()
+	{
+		$this->_query_return = true;
+		return $this;
 	}
 
 	/**
@@ -213,6 +221,7 @@ abstract class Libs_ActiveRecord
 	public function clear()
 	{
 		$this->_query_buffer = $this->_init_query;
+		$this->_query_return = false;
 	}
 
 	public function db()
@@ -300,6 +309,12 @@ abstract class Libs_ActiveRecord
 			' SET '.$this->_prepareUpdates($data).
 			' '.$this->_prepareWheres();
 
+		if ($this->_query_return)
+		{
+			$this->clear();
+			return $sql;
+		}
+
 		$this->query($sql);
 
 		$this->clear();
@@ -311,6 +326,13 @@ abstract class Libs_ActiveRecord
 	{
 		$sql = 'INSERT INTO '.$this->_table_name.' ('.$this->_prepareKeys($data).')
 				VALUES('.$this->_prepareValues($data).') '.$this->_query_buffer['duplicate'];
+
+
+		if ($this->_query_return)
+		{
+			$this->clear();
+			return $sql;
+		}
 
 		$res = $this->query($sql);
 
@@ -333,6 +355,12 @@ abstract class Libs_ActiveRecord
 		$sql = 'INSERT INTO '.$this->_table_name.' ('.$this->_prepareKeys($data[0]).')
 				VALUES'.$values.' '.$this->_query_buffer['duplicate'];
 
+		if ($this->_query_return)
+		{
+			$this->clear();
+			return $sql;
+		}
+
 		$this->query($sql);
 
 		$this->clear();
@@ -348,6 +376,12 @@ abstract class Libs_ActiveRecord
 		}
 
 		$sql = 'DELETE FROM '.$this->_table_name.' '.$this->_prepareWheres();
+
+		if ($this->_query_return)
+		{
+			$this->clear();
+			return $sql;
+		}
 
 		$this->query($sql);
 
@@ -439,6 +473,12 @@ abstract class Libs_ActiveRecord
 			' '.$this->_prepareGroupBys().
 			' '.$this->_prepareOrderBys().
 			' '.$this->_query_buffer['limit'];
+
+		if ($this->_query_return)
+		{
+			$this->clear();
+			return $sql;
+		}
 
 		$res = $this->_select($sql);
 

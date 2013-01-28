@@ -7,7 +7,9 @@ class Models_Buildings
 	public function __construct()
 	{
 		$this->_table = new Db_Buildings();
+		$this->_table->setAlias('b');
 		$this->_street_table = new Db_Streets();
+		$this->_street_table->setAlias('s');
 	}
 
 	public function getStreets()

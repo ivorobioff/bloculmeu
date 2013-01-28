@@ -55,9 +55,18 @@ class Libs_View
 		include_once $this->_view;
 	}
 
-	public function block($path, $params = array())
+	public function block($path, $params = array(), $show_now = true)
 	{
+		ob_start();
 		include BASE_DIR.'/views/'.$path;
+		$html = ob_get_clean();
+
+		if (!$show_now)
+		{
+			return $html;
+		}
+
+		echo $html;
 	}
 
 	private function _clear()

@@ -11,6 +11,14 @@ class Controllers_Discussions extends Controllers_Common
 		$this->_view->render('discussions/index.phtml');
 	}
 
+	public function invitations()
+	{
+		$model = new Models_Invitations();
+
+		$this->_view->assign('invitations_list', $model->get4Main());
+		$this->_view->render('discussions/invitations.phtml');
+	}
+
 	public function add($params = array())
 	{
 		if (!in_array(always_set($params, 0, ''), array_keys(Libs_Handbooks_Discussions::getCategories())))

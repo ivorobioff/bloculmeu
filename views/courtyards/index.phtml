@@ -24,10 +24,13 @@
 		</form>
 	</div>
 	<br/>
-	<div style="background-color: #FBFBFB; border: 1px solid #999999; margin-bottom: 5px;">
-		<div style="padding: 10px;">
-			Stefan cel mare 12
-		</div>
+	<div id="buildings-container">
+	<?php
+		foreach ($this->_params['buildings_list'] as $item)
+		{
+			$this->block('courtyards/item.phtml', $item);
+		}
+	?>
 	</div>
 </div>
 <script>

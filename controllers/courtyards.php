@@ -4,7 +4,9 @@ class Controllers_Courtyards extends Controllers_Common
 	public function index()
 	{
 		$model = new Models_Buildings();
+		$model_courtyards = new Models_Courtyards();
 
+		$this->_view->assign('buildings_list', $model_courtyards->get4Main());
 		$this->_view->assign('streets', $model->getStreets());
 		$this->_view->render('courtyards/index.phtml');
 	}
@@ -26,9 +28,9 @@ class Controllers_Courtyards extends Controllers_Common
 			return send_form_error($ex->getData());
 		}
 
-		$model = new Models_Buildings();
+		$model_building = new Models_Buildings();
 
-		if (!$building = $model->getByAddress($_POST['street'], $_POST['number']))
+		if (!$building = $model_building->getByAddress($_POST['street'], $_POST['number']))
 		{
 			return send_form_error(array('message' => 'unknown error'));
 		}
@@ -50,6 +52,7 @@ class Controllers_Courtyards extends Controllers_Common
 			return send_form_error(array('message' => 'unknown error'));
 		}
 
-		send_form_success();
+		$item = $model_courtyard->getItem4Main($building['id']);
+		send_form_success(array('html' => $this->_view->block('courtyards/item.phtml', $item, false)));
 	}
 }
