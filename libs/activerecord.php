@@ -488,6 +488,11 @@ abstract class Libs_ActiveRecord
 	}
 
 
+	public function getResult($sql)
+	{
+		return $this->_select($sql);
+	}
+
 	public function getPrimaryKey()
 	{
 		return $this->_primary_key;

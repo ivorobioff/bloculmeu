@@ -1,0 +1,14 @@
+<div style="background-color: #FBFBFB; border: 1px solid #999999; margin-bottom: 5px;" class="invitation-item">
+	<div style="padding: 10px;">
+		<div style="float: left;">
+			<?=htmlspecialchars($params['text'])?>
+		<br/><i><?=htmlspecialchars($params['address'])?></i>
+		<input type="hidden" name="id" value="<?=$params['invitation_id']?>" />
+		</div>
+		<div style="float: right;">
+			<input type="button" name="accept" value="Принять" />&nbsp;
+			<input type="button" name="decline" value="Отклонить" />
+		</div>
+		<br class="clr" />
+	</div>
+</div>

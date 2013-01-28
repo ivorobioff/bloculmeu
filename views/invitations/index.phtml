@@ -1,0 +1,16 @@
+<div>
+	<h2>Приглашения на дискуссии</h2>
+	<div id="invitations-list">
+	<?php
+		foreach ($this->_params['invitations_list'] as $item)
+		{
+			$this->block('invitations/item.phtml', $item);
+		}
+	?>
+	</div>
+</div>
+<script type="text/javascript">
+	$(function(){
+		new Views.InvitationsList();
+	});
+</script>

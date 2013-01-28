@@ -154,3 +154,50 @@ Views.CourtyardBuildings.getInstance = function(){
 	
 	return Views.CourtyardBuildings._INSTANCE;
 }
+
+
+
+Views.InvitationsList = Views.Abstract.extend({
+	_id: 'invitations-list',
+	
+	initialize: function(){
+		this._super();
+		this._el.find('.invitation-item').each(function(){
+			new Views.InvitationsItem(this);
+		});
+	}
+});
+
+Views.InvitationsItem = Class.extend({
+	
+	_el: null,
+	
+	_invitation_id: null,
+	
+	_url: '/invitations/',
+	
+	initialize: function(el){
+		this._el = $(el);
+		this._invitation_id = this._el.find('[name=id]').val();
+		this._el.find('[name=accept]').click($.proxy(this.accept, this));
+		this._el.find('[name=decline]').click($.proxy(this.decline, this));
+	},
+	
+	accept: function(){
+		this._sendRequest('accept');
+	},
+	
+	decline: function(){
+		this._sendRequest('decline');
+	},
+	
+	_sendRequest: function(type){
+		this._el.find('[type=button]').attr('disabled', 'disabled');
+		$.post(this._url + type + '/', {id: this._invitation_id}, $.proxy(function(res){
+			if (res != 'ok'){
+				throw 'unknown error';
+			}	
+			this._el.remove();
+		}, this));
+	}
+});

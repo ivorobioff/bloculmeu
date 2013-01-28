@@ -59,12 +59,43 @@ class Models_Discussions
 		$profile_table = new Db_Profiles();
 		$profile_table->setAlias('p');
 
-		$res = $this->_table
-			->select('d.*, p.fio')
-			->join($profile_table, 'd.user_id=p.user_id')
-			->where('building_id', Db_Currents::getBuildingInfo('id'))
-			->orderBy('d.id')
+		$discussions_users_table = new Db_DiscussionsUsers();
+		$query = $discussions_users_table
+			->setAlias('du')
+			->setQueryReturnMode()
+			->select('du.discussion_id')
+			->where('du.user_id', Db_Currents::getUserInfo('id'))
+			->where('du.status', 'accept')
 			->fetchAll();
+		$cb = Db_Currents::getBuildingInfo('id');
+
+		$discussions_buildings_table = new Db_DiscussionsBuildings();
+		$select_1 = $discussions_buildings_table
+			->setAlias('db')
+			->setQueryReturnMode()
+			->select('d.*')
+			->join($this->_table, 'd.id=db.discussion_id')
+			->where('db.building_id', $cb)
+			->where('db.discussion_id IN ('.$query.')')
+			->fetchAll();
+
+		$select_2 = $this->_table
+			->setQueryReturnMode()
+			->select('d.*')
+			->where('d.building_id', $cb)
+			->fetchAll();
+
+		$sql = 'SELECT t1.*, p.fio FROM
+		(
+			'.$select_1.' UNION '.$select_2.'
+		) AS t1
+		LEFT JOIN '.$profile_table->getTableName().' AS '.$profile_table->getAlias().'
+		ON t1.user_id=p.user_id
+		ORDER BY t1.id DESC
+		';
+
+		$res = $this->_table->getResult($sql);
+
 
 		return new Libs_DiscussionsList($res);
 	}
