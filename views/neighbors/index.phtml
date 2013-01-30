@@ -6,4 +6,11 @@
 			$this->block('neighbors/item.phtml', $item);
 		}
 	?>
+	<h2>Другие соседи:</h2>
+	<?php
+		foreach ($this->_params['other_neighbors_list'] as $item)
+		{
+			$this->block('neighbors/item.phtml', $item);
+		}
+	?>
 </div>
