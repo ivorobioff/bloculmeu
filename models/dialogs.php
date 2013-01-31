@@ -9,7 +9,9 @@ class Models_Dialogs
 		
 		if ($active_user_id)
 		{
-			$table->where('sender_id != '.$active_user_id.' AND receiver_id != '.$active_user_id);
+			$table
+				->where('sender_id != ', $active_user_id)
+				->where('receiver_id !=', $active_user_id);
 		}
 		
 		
