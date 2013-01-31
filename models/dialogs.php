@@ -17,7 +17,9 @@ class Models_Dialogs
 				->where('receiver_id !=', $active_user_id);
 		}
 		
-		$table->groupBy('another_user')
+		$table
+			->orderBy('insert_date')
+			->groupBy('another_user')
 		
 		return new Libs_DialogsList($table->fetchAll());
 		
