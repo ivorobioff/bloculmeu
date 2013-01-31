@@ -5,7 +5,8 @@ class Models_Dialogs
 	{
 		$table = new Db_Messages();
 		$table
-			->where('(sender_id='.Db_Currents::getUserInfo('id').' OR receiver_id='.Db_Currents::getUserInfo('id').')');
+			->select('IF(sender_id="'.Db_Currents::getUserInfo('id').'", receiver_id, sender_id) AS another_user')
+			->where('(sender_id="'.Db_Currents::getUserInfo('id').'" OR receiver_id="'.Db_Currents::getUserInfo('id').'")');
 		
 		if ($active_user_id)
 		{
