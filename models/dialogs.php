@@ -19,7 +19,7 @@ class Models_Dialogs
 		
 		$table->groupBy('another_user')
 		
-		return $
+		return new Libs_DialogsList($table->fetchAll());
 		
 	}
 }
