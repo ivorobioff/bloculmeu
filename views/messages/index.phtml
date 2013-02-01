@@ -22,9 +22,9 @@
 		<div style="float: right; width: 25%;">
 			<div style="padding: 5px; overflow: auto; height: 300px;">
 				<?php
-					for ($i = 0; $i <= 20; $i ++)
+					foreach ($this->_params['dialogs_list'] as $item)
 					{
-						$this->block('messages/contact.phtml');
+						$this->block('messages/contact.phtml', $item);
 					}
 				?>
 			</div>

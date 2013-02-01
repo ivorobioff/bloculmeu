@@ -9,19 +9,19 @@ class Models_Dialogs
 			->select('IF(sender_id="'.Db_Currents::getUserInfo('id').'", sender_id, receiver_id) AS me')
 			->select('id')
 			->where('(sender_id="'.Db_Currents::getUserInfo('id').'" OR receiver_id="'.Db_Currents::getUserInfo('id').'")');
-		
+
 		if ($active_user_id)
 		{
 			$table
 				->where('sender_id != ', $active_user_id)
 				->where('receiver_id !=', $active_user_id);
 		}
-		
+
 		$table
 			->orderBy('insert_date')
-			->groupBy('another_user')
-		
-		return new Libs_DialogsList($table->fetchAll());
-		
+			->groupBy('another_user');
+
+		return new Libs_DialogsList($table->fetchAll(), $active_user_id);
+
 	}
 }
