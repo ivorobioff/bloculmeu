@@ -1,5 +1,5 @@
 <?php
-class Libs_InvitationsList extends Libs_IteratorReplacer
+class Models_Lists_Invitations extends Libs_IteratorReplacer
 {
 	public function current ()
 	{

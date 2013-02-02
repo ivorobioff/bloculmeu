@@ -97,6 +97,6 @@ class Models_Discussions
 		$res = $this->_table->getResult($sql);
 
 
-		return new Libs_DiscussionsList($res);
+		return new Models_Lists_Discussions($res);
 	}
 }

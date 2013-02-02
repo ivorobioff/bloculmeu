@@ -52,6 +52,6 @@ class Models_Invitations
 			->where('db.discussion_id NOT IN ('.$discussions_users_query.')')
 			->fetchAll();
 
-		return new Libs_InvitationsList($res);
+		return new Models_Lists_Invitations($res);
 	}
 }

@@ -21,7 +21,19 @@ class Models_Dialogs
 			->orderBy('insert_date')
 			->groupBy('another_user');
 
-		return new Libs_DialogsList($table->fetchAll(), $active_user_id);
+		$data = $table->fetchAll();
+
+		if ($active_user_id)
+		{
+			$active_dialog = array(
+				'another_user' => $active_user_id,
+				'me' => Db_Currents::getUserInfo('id')
+			);
+
+			array_unshift($data, $active_dialog);
+		}
+
+		return new Models_Lists_Dialogs($data);
 
 	}
 }

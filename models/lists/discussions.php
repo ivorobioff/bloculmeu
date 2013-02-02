@@ -1,5 +1,5 @@
 <?php
-class Libs_DiscussionsList extends Libs_IteratorReplacer
+class Models_Lists_Discussions extends Libs_IteratorReplacer
 {
 	public function current ()
 	{

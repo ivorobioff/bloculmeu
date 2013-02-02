@@ -49,6 +49,6 @@ class Libs_Geo_Calculator
 
 	private function _toSqlRad($q)
 	{
-		return '('.$q.' * PI() / 180)';
+		return '(('.$q.') * PI() / 180)';
 	}
 }
