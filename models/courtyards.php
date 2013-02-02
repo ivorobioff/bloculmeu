@@ -3,6 +3,8 @@ class Models_Courtyards
 {
 	private $_table;
 
+	const NEIGHBORS_RADIUS = 200;
+
 	public function __construct()
 	{
 		$this->_table = new Db_Courtyards();
@@ -59,5 +61,40 @@ class Models_Courtyards
 		}
 
 		return $this->_table->fetchAll();
+	}
+
+	public function getSuggestions()
+	{
+		$calc = new Libs_Geo_Calculator();
+
+		$table = new Db_Buildings();
+		$table->setAlias('b');
+
+		$streets_table = new Db_Streets();
+		$streets_table->setAlias('s');
+
+		$courtyard_buildings = $this->_table
+			->setQueryReturnMode()
+			->select('building_id')
+			->where('user_id', Db_Currents::getUserInfo('id'))
+			->where('current_building_id', Db_Currents::getBuildingInfo('id'))
+			->fetchAll();
+
+		$lat = Db_Currents::getBuildingInfo('latitude');
+		$long = Db_Currents::getBuildingInfo('longitude');
+
+		$dist_query = $calc->getSqlFormula($lat, $long, 'b.latitude', 'b.longitude');
+
+		$data = $table
+			->select($dist_query.' AS distance, s.*, b.*')
+			->join($streets_table, 's.id=b.street_id')
+			->where('b.id NOT IN ('.$courtyard_buildings.')')
+			->where($dist_query.' <=', self::NEIGHBORS_RADIUS)
+			->where('b.latitude!=', $lat)
+			->where('b.longitude!=', $long)
+			->orderBy('1', 'ASC')
+			->fetchAll();
+
+		return new Models_Lists_Suggestions($data);
 	}
 }

@@ -19,7 +19,7 @@ class Libs_Geo_Calculator
 
 		$a = 'SIN('.$d_lat.'/2) * SIN('.$d_lat.'/2) + SIN('.$d_long.'/2) * SIN('.$d_long.'/2) * COS('.$lat1.') * COS('.$lat2.')';
 
-		return self::EARTH_RADIOS.' * ATAN2(SQRT('.$a.'), SQRT(1-'.$a.'))';
+		return self::EARTH_RADIOS.' * 2 * ATAN2(SQRT('.$a.'), SQRT(1-'.$a.'))';
 	}
 
 	public function getDistance(Libs_Geo_Point $point1, Libs_Geo_Point $point2)

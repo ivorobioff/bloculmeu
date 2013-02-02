@@ -81,7 +81,7 @@ class Models_Users
 		$streets_table->setAlias('s');
 
 		$current_building = $this->_users_buildings_table
-			->select('b.id, b.number, b.street_id, s.name')
+			->select('b.*, s.name')
 			->where('ub.user_id', $user_id)
 			->where('ub.is_current', 1)
 			->join($buildings_table, 'b.id = ub.building_id')

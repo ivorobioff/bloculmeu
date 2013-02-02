@@ -3,6 +3,7 @@ class Controllers_Discussions extends Controllers_Common
 {
 	public function index()
 	{
+
 		$model = new Models_Discussions();
 
 		$this->_view->assign('discussions_list', $model->get4Main());

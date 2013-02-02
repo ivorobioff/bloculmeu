@@ -8,6 +8,7 @@ class Controllers_Courtyards extends Controllers_Common
 
 		$this->_view->assign('buildings_list', $model_courtyards->get4Main());
 		$this->_view->assign('streets', $model->getStreets());
+		$this->_view->assign('suggestions_list', $model_courtyards->getSuggestions());
 		$this->_view->render('courtyards/index.phtml');
 	}
 
