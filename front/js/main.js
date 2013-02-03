@@ -201,3 +201,65 @@ Views.InvitationsItem = Class.extend({
 		}, this));
 	}
 });
+
+Views.CourtyardSuggestions = Views.Abstract.extend({
+	
+	_id: 'courtyard-suggestions-list',
+	
+	initialize: function(){
+		this._super();
+		this._el.find('.suggestion-item').each(function(){
+			new Views.CourtyardSuggestionItem(this);
+		});
+	}
+});
+
+Views.CourtyardSuggestionItem = Class.extend({
+	_el: null,
+	_building_id: 0,
+	
+	initialize: function(e){
+		this._el = $(e);
+		this._building_id = this._el.find('input').val();
+		
+		this._el.find('a').click($.proxy(function(){
+			this.onClick();
+			return false;
+		}, this))
+	},
+	
+	onClick: function(){
+		if (confirm('Добавить данное здание в ваш двор?')){
+			Views.SuggestionDisabler.getInstance().show();
+			$.post('/courtyards/add-suggestion/', {id: this._building_id}, $.proxy(function(data){
+				Views.SuggestionDisabler.getInstance().hide();
+				if (data.status == 'success'){
+					Views.CourtyardBuildings.getInstance().addBuilding(data.data.html);
+					this._el.remove();
+				}
+			}, this), 'json')
+		}
+	}
+});
+
+Views.SuggestionDisabler = Views.Abstract.extend({
+	_id: 'suggestions-disabler',
+	
+	show: function(){
+		this._el.show();
+	},
+	
+	hide: function(){
+		this._el.hide();
+	}
+});
+
+Views.SuggestionDisabler._INSTANCE = null;
+
+Views.SuggestionDisabler.getInstance = function(){
+	if (Views.SuggestionDisabler._INSTANCE == null){
+		Views.SuggestionDisabler._INSTANCE = new Views.SuggestionDisabler();
+	}
+	
+	return Views.SuggestionDisabler._INSTANCE;
+}

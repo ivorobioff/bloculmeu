@@ -56,4 +56,24 @@ class Controllers_Courtyards extends Controllers_Common
 		$item = $model_courtyard->getItem4Main($building['id']);
 		send_form_success(array('html' => $this->_view->block('courtyards/item.phtml', $item, false)));
 	}
+
+	public function addSuggestion()
+	{
+		if (!is_ajax())
+		{
+			return ;
+		}
+
+		if (!$id = intval(always_set($_POST, 'id', 0)))
+		{
+			return send_form_error();
+		}
+
+		$model_courtyard = new Models_Courtyards();
+
+		$model_courtyard->add($id);
+		$item = $model_courtyard->getItem4Main($id);
+
+		send_form_success(array('html' => $this->_view->block('courtyards/item.phtml', $item, false)));
+	}
 }

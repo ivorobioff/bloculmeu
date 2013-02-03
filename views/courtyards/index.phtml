@@ -1,7 +1,16 @@
 <div>
 	<h2>Мой двор</h2>
 	<div>
-		<div style="margin-bottom: 10px;">
+		<h3>Дома в вашем дворе</h3>
+	<div id="buildings-container">
+	<?php
+		foreach ($this->_params['buildings_list'] as $item)
+		{
+			$this->block('courtyards/item.phtml', $item);
+		}
+	?>
+	</div>
+		<div style="margin-bottom: 10px; position: relative;" id="courtyard-suggestions-list">
 			<h3>Рекомендуемые дома</h3>
 			<?php
 				foreach ($this->_params['suggestions_list'] as $item)
@@ -9,8 +18,10 @@
 					$this->block('courtyards/suggestion.phtml', $item);
 				}
 			?>
+			<div id="suggestions-disabler" style="position: absolute; top: 0; left: 0; opacity: 0.5; width: 100%; height: 100%; background-color: #ffffff; display: none;"></div>
 		</div>
 		<h3>Найти вручную</h3>
+		<div style="margin-bottom: 20px;">
 		<form action="/courtyards/add-building" id="single-form">
 			<span  id="buidling-address">
 			<select name="street">
@@ -32,20 +43,13 @@
 			&nbsp;&nbsp;&nbsp;
 			<input type="submit" value="Добавить дом" />
 		</form>
-	</div>
-	<h3>Дома в вашем дворе</h3>
-	<div id="buildings-container">
-	<?php
-		foreach ($this->_params['buildings_list'] as $item)
-		{
-			$this->block('courtyards/item.phtml', $item);
-		}
-	?>
+		</div>
 	</div>
 </div>
 <script>
 $(function(){
 	new Views.CourtyardForm();
 	new Views.StreetNumbersLoader();
+	new Views.CourtyardSuggestions();
 });
 </script>

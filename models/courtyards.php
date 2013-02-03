@@ -86,7 +86,7 @@ class Models_Courtyards
 		$dist_query = $calc->getSqlFormula($lat, $long, 'b.latitude', 'b.longitude');
 
 		$data = $table
-			->select($dist_query.' AS distance, s.*, b.*')
+			->select($dist_query.' AS distance, s.*, b.*, b.id AS building_id')
 			->join($streets_table, 's.id=b.street_id')
 			->where('b.id NOT IN ('.$courtyard_buildings.')')
 			->where($dist_query.' <=', self::NEIGHBORS_RADIUS)
