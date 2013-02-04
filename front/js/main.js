@@ -126,6 +126,46 @@ Views.StreetNumbersLoader = Views.Abstract.extend({
 
 Views.SignupForm = Views.AutoRedirectForm.extend({});
 
+Views.GeoSearch = Views.Abstract.extend({
+	_id: 'geo-search',
+	
+	initialize: function(){
+		this._super();
+		this._el.find('input[type=button]').click($.proxy(function(){
+			if (navigator.geolocation){
+				 navigator.geolocation.getCurrentPosition($.proxy(this.onGetLocation, this));
+			} else {
+				alert('Ваш браузер не потдерживает этот сервис');
+			}
+		}, this));
+	},
+	
+	onGetLocation: function(position){
+		this.disableUI();
+		$.get('/buildings/geo/' + position.coords.latitude + '/' + position.coords.longitude, $.proxy(function(data){
+			this.enableUI();
+			if (typeof data.data != 'object'){
+				throw 'wrong data';
+			}
+	
+			if (data.status == 'success'){
+				if ($.trim(data.data.html) == ''){
+					data.data.html = '<br/>Ваш дом не найден :-(';
+				}
+				this._el.find('#geo-buildings-list').html(data.data.html);
+			}
+		}, this), 'json');
+	},
+	
+	disableUI: function(){
+		this._el.find('input').attr('disabled', 'disabled');
+	},
+	
+	enableUI: function(){
+		this._el.find('input').removeAttr('disabled');
+	}
+});
+
 Views.SigninForm = Views.AutoRedirectForm.extend({});
 
 Views.NewDiscussionForm = Views.AutoRedirectForm.extend({});
@@ -142,7 +182,7 @@ Views.CourtyardBuildings = Views.Abstract.extend({
 	
 	addBuilding: function(html){
 		this._el.prepend(html);
-	},
+	}
 });
 
 Views.CourtyardBuildings._INSTANCE = null;

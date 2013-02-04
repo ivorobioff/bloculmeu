@@ -32,4 +32,21 @@ class Models_Buildings
 			->where('`number`', $numder)
 			->fetchOne();
 	}
+
+	public function getSomeByGeo($latitude, $longitude)
+	{
+		$streets_table = new Db_Streets();
+		$streets_table->setAlias('s');
+
+		$geo = new Libs_Geo_Calculator();
+
+		return $this->_table
+			->select($geo->getSqlFormula($latitude, $longitude, 'b.latitude', 'b.longitude').' AS distance')
+			->select('b.*, s.name')
+			->join($streets_table, 's.id=b.street_id')
+			->where($geo->getSqlFormula($latitude, $longitude, 'b.latitude', 'b.longitude').'<=', 400)
+			->limit(3)
+			->orderBy('1', 'ASC')
+			->fetchAll();
+	}
 }

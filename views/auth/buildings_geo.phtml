@@ -1,0 +1,10 @@
+<?php
+	foreach ($params as $item)
+	{
+	?>
+		<div>
+<input type="radio" name="geo-building" value="<?=$item['id']?>" /> <?=htmlspecialchars($item['name'].' '.$item['number'])?>
+</div>
+	<?php
+	}
+?>

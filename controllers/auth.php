@@ -92,10 +92,19 @@ class Controllers_Auth extends Controllers_Common
 			redirect(_url('/auth/signup/'));
 		}
 
+		$geo_buidling = intval(always_set($_POST, 'geo-building', 0));
+
 		try
 		{
-			Libs_Validator::setness($_POST, array('fio', 'email', 'password', 'conf_password', 'number', 'street'));
-			Libs_Validator::emptyness($_POST, array('fio', 'email', 'street', 'number'));
+			Libs_Validator::setness($_POST, array('fio', 'email', 'password', 'conf_password'));
+			Libs_Validator::emptyness($_POST, array('fio', 'email'));
+
+			if ($geo_buidling === 0)
+			{
+				Libs_Validator::setness($_POST, array('street', 'number'));
+				Libs_Validator::emptyness($_POST, array('street', 'number'));
+			}
+
 			Libs_Validator::password($_POST['password'], $_POST['conf_password']);
 			Libs_Validator::email($_POST['email']);
 		}
@@ -117,14 +126,24 @@ class Controllers_Auth extends Controllers_Common
 			return send_form_error(array('message' => 'unkown error'));
 		}
 
-		$building_model = new Models_Buildings();
 
-		if (!$building_info = $building_model->getByAddress($_POST['street'], $_POST['number']))
+		if ($geo_buidling === 0)
 		{
-			return send_form_error(array('street' => _t('/signup/building-not-found')));
+			$building_model = new Models_Buildings();
+
+			if (!$building_info = $building_model->getByAddress($_POST['street'], $_POST['number']))
+			{
+				return send_form_error(array('street' => _t('/signup/building-not-found')));
+			}
+
+			$building_id = $building_info['id'];
+		}
+		else
+		{
+			$building_id = $geo_buidling;
 		}
 
-		if (!$model->assignBuilding($user_id, $building_info['id'], true))
+		if (!$model->assignBuilding($user_id, $building_id, true))
 		{
 			return send_form_error(array('message' => 'unkown error'));
 		}
