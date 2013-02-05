@@ -28,6 +28,6 @@ class Models_Messages
 			->where($main_where)
 			->fetchAll();
 			
-		return new Models_List_Messages($data);
+		return new Models_Lists_Messages($data);
 	}
 }
