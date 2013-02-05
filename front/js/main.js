@@ -315,11 +315,14 @@ Views.DialogsList = Views.Abstract.extend({
 	}	
 });
 
-Views.DialogIO = Views.Abstract.extend({
-	
+Views.DialogItem = Class.extend({
+	_el: null,
+	initialize: function(e){
+		this._el = $(e);
+	}
 });
 
-Views.DialogItem = Class.extend({
+Views.DialogIO = Views.Abstract.extend({
 	
 });
 
