@@ -21,5 +21,7 @@ $labels = array(
 	'/discussions/types/outter' => 'Внешняя',
 
 	'/courtyards/building-exists' => 'Выбраный дом уже есть у вас во дворе',
-		'/courtyards/users-building' => 'Выбраный дом не может быть вашим домом'
+	'/courtyards/users-building' => 'Выбраный дом не может быть вашим домом',
+	
+	'/messages/sender-you' => 'Вы',
 );
