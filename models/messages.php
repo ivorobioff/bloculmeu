@@ -24,6 +24,8 @@ class Models_Messages
 
 		$data = $this->_table
 			->where($main_where)
+			->orderBy('m.id', 'DESC')
+			->limit(20)
 			->fetchAll();
 			
 		return new Models_Lists_Messages($data);
