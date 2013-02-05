@@ -337,7 +337,10 @@ Models.DialogPartner = Class.extend({
 });
 
 Views.DialogIO = Views.Abstract.extend({
-	_model: null,	
+	_model: null,
+	setModel: function(model){
+		this._model = model;
+	}
 });
 
 Views.DialogIO._INSTANCE = null;
