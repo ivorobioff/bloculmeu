@@ -15,7 +15,7 @@ class Models_Lists_Messages extends Libs_IteratorReplacer
 		
 		if ($res['sender_id'] == Db_Currents::getUserInfo('id'))
 		{
-			$res['fio'] = _t('/messages/you/');
+			$res['fio'] = _t('/messages/sender-you/');
 		}
 		else
 		{
