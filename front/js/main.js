@@ -1,5 +1,5 @@
 var Views = {};
-var Urls = {};
+var Models = {};
 
 Views.Abstract = Class.extend({
 	_id: '',
@@ -303,3 +303,15 @@ Views.SuggestionDisabler.getInstance = function(){
 	
 	return Views.SuggestionDisabler._INSTANCE;
 }
+
+Views.DialogsList = Views.Abstract.extend({
+	
+});
+
+Views.DialogArea = Views.Abstract.extend({
+	
+});
+
+Models.DialogPartner = Class.extend({
+	
+});
