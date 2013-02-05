@@ -333,11 +333,11 @@ Views.DialogItem = Class.extend({
 });
 
 Models.DialogPartner = Class.extend({
-	_model: null,
+
 });
 
 Views.DialogIO = Views.Abstract.extend({
-	
+	_model: null,	
 });
 
 Views.DialogIO._INSTANCE = null;
