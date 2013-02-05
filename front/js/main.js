@@ -317,15 +317,35 @@ Views.DialogsList = Views.Abstract.extend({
 
 Views.DialogItem = Class.extend({
 	_el: null,
+	_model: null,
+	
 	initialize: function(e){
 		this._el = $(e);
+		this._el.click($.proxy(function(){
+			if (_.isNull(this._model)){
+				this._model = new Models.DialogPartner();
+			}
+			
+			Views.DialogIO.getInstance().setModel(this._model);
+			
+		}, this))
 	}
+});
+
+Models.DialogPartner = Class.extend({
+	_model: null,
 });
 
 Views.DialogIO = Views.Abstract.extend({
 	
 });
 
-Models.DialogPartner = Class.extend({
+Views.DialogIO._INSTANCE = null;
+
+Views.DialogIO.getInstance = function(){
+	if (Views.DialogIO._INSTANCE == null){
+		Views.DialogIO._INSTANCE = new Views.DialogIO();
+	}
 	
-});
+	return Views.DialogIO._INSTANCE;
+}
