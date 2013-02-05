@@ -27,7 +27,8 @@ class Models_Dialogs
 		{
 			$active_dialog = array(
 				'another_user' => $active_user_id,
-				'me' => Db_Currents::getUserInfo('id')
+				'me' => Db_Currents::getUserInfo('id'),
+				'active' => true
 			);
 
 			array_unshift($data, $active_dialog);

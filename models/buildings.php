@@ -33,6 +33,11 @@ class Models_Buildings
 			->fetchOne();
 	}
 
+	/**
+	 * Достает несколько билдингов лежащие не далеко от полученой точки.
+	 * @param int $latitude
+	 * @param int $longitude
+	 */
 	public function getSomeByGeo($latitude, $longitude)
 	{
 		$streets_table = new Db_Streets();
@@ -45,8 +50,8 @@ class Models_Buildings
 			->select('b.*, s.name')
 			->join($streets_table, 's.id=b.street_id')
 			->where($geo->getSqlFormula($latitude, $longitude, 'b.latitude', 'b.longitude').'<=', 400)
-			->limit(3)
 			->orderBy('1', 'ASC')
+			->limit(3)
 			->fetchAll();
 	}
 }
