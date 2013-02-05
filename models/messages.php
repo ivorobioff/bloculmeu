@@ -23,6 +23,7 @@ class Models_Messages
 				.') OR (m.receiver_id='.$user_id.' AND m.sender_id='.Db_Currents::getUserInfo('id').')';
 
 		$data = $this->_table
+			->select('m.`text`, m.insert_date')
 			->select('IF(m.sender_id="'.Db_Currents::getUserInfo('id').'", m.receiver_id, m.sender_id) AS another_user')
 			->select('IF(m.sender_id="'.Db_Currents::getUserInfo('id').'", m.sender_id, m.receiver_id) AS me')
 			->where($main_where)
