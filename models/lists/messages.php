@@ -13,18 +13,17 @@ class Models_Lists_Messages extends Libs_IteratorReplacer
 	{
 		$res = current($this->_data);
 		
-		if (isset($res['another_user']))
+		if ($res['sender_id'] == Db_Currents::getUserInfo('id'))
 		{
-			
+			$res['fio'] = _t('/messages/you/');
 		}
 		else
 		{
-			
+			$res['fio'] = $this->_profiles_table
+				->where('user_id', $res['sender_id'])
+				->getValue('fio', '');
 		}
-		
-		$res['fio'] = $this->_profiles_table
-			->where('user_id', $res['another_user'])
-		
+				
 		return $res;
 	}
 }
