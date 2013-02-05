@@ -44,7 +44,7 @@ abstract class Libs_ActiveRecord
 		{
 			include BASE_DIR.'/config/db.php';
 
-			self::$_db = new \mysqli(
+			self::$_db = new mysqli(
 				$db_config['host'],
 				$db_config['username'],
 				$db_config['password'],
