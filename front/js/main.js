@@ -305,7 +305,14 @@ Views.SuggestionDisabler.getInstance = function(){
 }
 
 Views.DialogsList = Views.Abstract.extend({
+	_id: 'dialogs-list',
 	
+	initialize: function(){
+		this._super();
+		this._el.find('.dialog-item').each(function(){
+			new Views.DialogItem(this);
+		})
+	}	
 });
 
 Views.DialogIO = Views.Abstract.extend({
