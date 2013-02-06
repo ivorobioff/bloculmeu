@@ -323,8 +323,16 @@ Views.DialogsList = Views.Abstract.extend({
 		}
 	}
 });
+
 Views.DilalogItem = Class.extend({
-	setActive: function(){
+	_el: null,
+	
+	initialize: function(e){
+		this._el = $(e);
+		this._el.click($.proxy(this.activate(), this));
+	},
+	
+	active: function(){
 		
 	}
 });
