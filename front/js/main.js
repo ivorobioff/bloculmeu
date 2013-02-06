@@ -307,32 +307,80 @@ Views.SuggestionDisabler.getInstance = function(){
 Views.DialogsList = Views.Abstract.extend({
 	_id: 'dialogs-list',
 	_dialogs: null,
+	_active_id: null,
 	
-	initialize: function(){
+	initialize: function(user_id){
 		this._super();
 		this._dialogs = [];
 		var thiz = this;
+		
 		this._el.find('.dialog-item').each(function(){
-			thiz._dialogs[$(this).attr('data-id')] = new Views.DialogItem(this);	
+			var id = thiz._getItemId(this);
+			thiz._dialogs[id] = new Views.DialogsItem(this, new Models.DialogsItem(id));
 		});
-	},
-	
-	setActive: function(user_id){
-		if (typeof this._dialogs[user_id] == 'object'){
-			this._dialogs[user_id].activate();
+		
+		this._el.find('.dialog-item').click(function(){
+			var id = thiz._getItemId(this);
+			thiz._dialogs[thiz._active_id].deactivate();
+			thiz._dialogs[id].activate();
+			thiz._active_id = id;
+		});
+		
+		if (typeof this._dialog[user_id] == 'object'){
+			 this._dialog[user_id].activate();
+			 this._active_id = user_id;
 		}
+	}, 
+	
+	_getItemId: function(e){
+		var el = $(e);
+		return $(el).find('[name=user-id]').val();
 	}
 });
 
-Views.DilalogItem = Class.extend({
+Views.DialogsItem = Class.extend({
+	_model: null,
 	_el: null,
 	
-	initialize: function(e){
+	initialize: function(e, model){
+		this._model = model;
 		this._el = $(e);
-		this._el.click($.proxy(this.activate(), this));
 	},
 	
-	active: function(){
+	activate: function(){
+		Views.DialogIO.getInstance().setModel(this._model);
+	},
+	
+	deactivate: function(){
 		
 	}
 });
+
+Models.DialogsItem = Class.extend({
+	_id: null,
+	
+	initialize: function(id){
+		this._id = id;
+	}
+});
+
+Views.DialogIO = Views.Abstract.extend({
+	_id: 'dialog-io',
+	_model: null,
+	
+	setModel: function(model){
+		this._model = model;
+	}
+	
+});
+
+Views.DialogIO._INSTANCE = null;
+
+Views.DialogIO.getInstance = function(){
+	
+	if (Views.DialogIO._INSTANCE == null){
+		Views.DialogIO._INSTANCE = new Views.DialogIO();
+	}
+	
+	return Views.DialogIO._INSTANCE;
+}
