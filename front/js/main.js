@@ -303,3 +303,10 @@ Views.SuggestionDisabler.getInstance = function(){
 	
 	return Views.SuggestionDisabler._INSTANCE;
 }
+
+Views.DialogsList = Views.Abstract.extend({});
+Views.DilalogItem = Class.extend({
+	setActive: function(){
+		
+	}
+});
