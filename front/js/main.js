@@ -304,7 +304,18 @@ Views.SuggestionDisabler.getInstance = function(){
 	return Views.SuggestionDisabler._INSTANCE;
 }
 
-Views.DialogsList = Views.Abstract.extend({});
+Views.DialogsList = Views.Abstract.extend({
+	_id: 'dialogs-list',
+	_dialogs: null,
+	
+	initialize: function(user_id){
+		this._super();
+		var thiz = this;
+		this._el.find('.dialog-item').each(function(){
+			thiz._dialogs[$(this).attr('data-id')] = new Views.DialogItem(this);	
+		});
+	}
+});
 Views.DilalogItem = Class.extend({
 	setActive: function(){
 		
