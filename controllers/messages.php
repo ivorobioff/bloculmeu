@@ -11,10 +11,9 @@ class Controllers_Messages extends Controllers_Common
 		}
 
 		$model = new Models_Dialogs();
-		$messages_model = new Models_Messages();
-
+	
 		$this->_view->assign('dialogs_list', $model->get4Main($active_user_id));
-		$this->_view->assign('messages_list', json_encode($messages_model->get4User($active_user_id)));
+		$this->_view->assign('active_user_id', $active_user_id);
 
 		$this->_view->render('messages/index.phtml');
 	}
