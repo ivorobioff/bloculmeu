@@ -1,7 +1,7 @@
 <div>
 	<div>
-		<b>John Smith</b> говорит:
-		<div>sdfsdfsdffs sdfsdfsd@#$!@@#Qfsdf sdfsdf</div>
+		<b><?=htmlspecialchars($params['fio'])?></b> говорит:
+		<div><?=htmlspecialchars($params['text'])?></div>
 	</div>
 	<div style="border-top: 1px dashed #cccccc; margin-top: 10px; margin-bottom: 10px;"></div>
 </div>

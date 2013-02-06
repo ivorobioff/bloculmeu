@@ -307,7 +307,7 @@ Views.SuggestionDisabler.getInstance = function(){
 Views.DialogsList = Views.Abstract.extend({
 	_id: 'dialogs-list',
 	_dialogs: null,
-	_active_id: null,
+	_active_id: 0,
 	
 	initialize: function(user_id){
 		this._super();
@@ -321,7 +321,11 @@ Views.DialogsList = Views.Abstract.extend({
 		
 		this._el.find('.dialog-item').click(function(){
 			var id = thiz._getItemId(this);
-			thiz._dialogs[thiz._active_id].deactivate();
+			
+			if (typeof thiz._dialogs[thiz._active_id] == 'object'){
+				thiz._dialogs[thiz._active_id].deactivate();
+			}
+			
 			thiz._dialogs[id].activate();
 			thiz._active_id = id;
 			return false;
@@ -350,10 +354,11 @@ Views.DialogsItem = Class.extend({
 	
 	activate: function(){
 		Views.DialogIO.getInstance().refresh(this._id);
+		this._el.css('background-color', '#eeeeee');
 	},
 	
 	deactivate: function(){
-		
+		this._el.css('background-color', '#ffffff');
 	}
 });
 
@@ -392,6 +397,7 @@ Views.DialogIO = Views.Abstract.extend({
 		this.enableUI();
 		if (data.status == 'success'){
 			this._addMessage(data.data.html);
+			this._scrollDown();
 		}
 		this.clearInput();
 	},
@@ -410,6 +416,7 @@ Views.DialogIO = Views.Abstract.extend({
 			this.enableUI();
 			if (data.status == 'success'){
 				this._output.html(data.data.html);
+				this._scrollDown();
 			}
 		}, this), 'json');
 	},
@@ -424,6 +431,17 @@ Views.DialogIO = Views.Abstract.extend({
 	
 	clearInput: function(){
 		this._input.find('textarea').val('');
+	}, 
+	
+	_scrollDown: function(){
+		var parent_height = this._output.parent().height()
+		var output_height = this._output.height();
+
+		if (output_height > parent_height){
+			var scroll_offset = output_height - parent_height;
+			this._output.parent().scrollTop(scroll_offset);
+		}
+		
 	}
 });
 
