@@ -316,7 +316,7 @@ Views.DialogsList = Views.Abstract.extend({
 		
 		this._el.find('.dialog-item').each(function(){
 			var id = thiz._getItemId(this);
-			thiz._dialogs[id] = new Views.DialogsItem(this, new Models.DialogsItem(id));
+			thiz._dialogs[id] = new Views.DialogsItem(id, this);
 		});
 		
 		this._el.find('.dialog-item').click(function(){
@@ -339,16 +339,16 @@ Views.DialogsList = Views.Abstract.extend({
 });
 
 Views.DialogsItem = Class.extend({
-	_model: null,
+	_id: null,
 	_el: null,
 	
-	initialize: function(e, model){
-		this._model = model;
+	initialize: function(id, e){
+		this._id = id;
 		this._el = $(e);
 	},
 	
 	activate: function(){
-		Views.DialogIO.getInstance().setModel(this._model);
+		Views.DialogIO.getInstance().refresh(id);
 	},
 	
 	deactivate: function(){
@@ -356,20 +356,14 @@ Views.DialogsItem = Class.extend({
 	}
 });
 
-Models.DialogsItem = Class.extend({
-	_id: null,
-	
-	initialize: function(id){
-		this._id = id;
-	}
-});
 
 Views.DialogIO = Views.Abstract.extend({
 	_id: 'dialog-io',
-	_model: null,
 	
-	setModel: function(model){
-		this._model = model;
+	_user_id: null,
+	
+	refresh: function(id){
+		this._user_id = id;
 	}
 	
 });
