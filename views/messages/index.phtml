@@ -1,26 +1,21 @@
 <div>
 	<h2>Переписки</h2>
 	<div>
-		<div style="float: left; width: 75%;">
+		<div style="float: left; width: 75%;" id="dialog-io">
 			<div style="padding: 5px;">
-				<div style="height: 300px; background-color: #F4F2F2; margin-bottom: 10px; padding: 5px; overflow: auto;">
-					<?php
-						for ($i=0; $i <=10; $i++)
-						{
-							$this->block('messages/item.phtml');
-						}
-					?>
+				<div style="height: 300px; background-color: #F4F2F2; margin-bottom: 10px; padding: 5px; overflow: auto;" id="dialog-output">
+
 				</div>
-				<div>
+				<div id="dialog-input">
 					<textarea style="width: 100%; height: 70px;"></textarea>
 					<div style="text-align: right; margin-top:5px;">
-						<input type="submit" value="Отправить" />
+						<input type="submit" value="Отправить" name="send"/>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div style="float: right; width: 25%;">
-			<div style="padding: 5px; overflow: auto; height: 300px;" id="dialogs-list">
+		<div style="float: right; width: 25%;" id="dialogs-list">
+			<div style="padding: 5px; overflow: auto; height: 300px;">
 				<?php
 					foreach ($this->_params['dialogs_list'] as $item)
 					{
@@ -33,5 +28,8 @@
 	</div>
 </div>
 <script type="text/javascript">
-
+	$(function(){
+		new Views.DialogsList(<?=$this->_params['active_user_id']?>);
+		Views.DialogIO.getInstance();
+	});
 </script>

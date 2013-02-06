@@ -324,10 +324,11 @@ Views.DialogsList = Views.Abstract.extend({
 			thiz._dialogs[thiz._active_id].deactivate();
 			thiz._dialogs[id].activate();
 			thiz._active_id = id;
+			return false;
 		});
 		
-		if (typeof this._dialog[user_id] == 'object'){
-			 this._dialog[user_id].activate();
+		if (typeof this._dialogs[user_id] == 'object'){
+			 this._dialogs[user_id].activate();
 			 this._active_id = user_id;
 		}
 	}, 
@@ -348,7 +349,7 @@ Views.DialogsItem = Class.extend({
 	},
 	
 	activate: function(){
-		Views.DialogIO.getInstance().refresh(id);
+		Views.DialogIO.getInstance().refresh(this._id);
 	},
 	
 	deactivate: function(){
@@ -359,13 +360,71 @@ Views.DialogsItem = Class.extend({
 
 Views.DialogIO = Views.Abstract.extend({
 	_id: 'dialog-io',
-	
 	_user_id: null,
+	_output: null,
+	_input: null,
+	
+	initialize: function(){
+		this._super();
+		this._input = this._el.find('#dialog-input');
+		this._output = this._el.find('#dialog-output');
+		
+		this._input.find('[name=send]').click($.proxy(function(){
+			var data = {
+				message: this._getMessage(),
+				id: this._user_id
+			}
+			this._beforeMessagePost();
+			$.post('/messages/send/', data, $.proxy(this._onMessagePost, this), 'json');
+		}, this));
+	},
 	
 	refresh: function(id){
 		this._user_id = id;
-	}
+		this._fetchMessages();
+	},
 	
+	_getMessage: function(){
+		return this._input.find('textarea').val();
+	},
+	
+	_onMessagePost: function(data){
+		this.enableUI();
+		if (data.status == 'success'){
+			this._addMessage(data.data.html);
+		}
+		this.clearInput();
+	},
+	
+	_beforeMessagePost: function(){
+		this.disableUI();
+	},
+	
+	_addMessage: function(html){
+		this._output.append(html);
+	},
+	
+	_fetchMessages: function(data){
+		this.disableUI();
+		$.get('/messages/get-all/' + this._user_id + '/', $.proxy(function(data){
+			this.enableUI();
+			if (data.status == 'success'){
+				this._output.html(data.data.html);
+			}
+		}, this), 'json');
+	},
+	
+	disableUI: function(){
+		this._input.find('textarea, input').attr('disabled', 'disabled');
+	},
+	
+	enableUI: function(){
+		this._input.find('textarea, input').removeAttr('disabled');
+	},
+	
+	clearInput: function(){
+		this._input.find('textarea').val('');
+	}
 });
 
 Views.DialogIO._INSTANCE = null;
