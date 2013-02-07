@@ -109,3 +109,14 @@ body, html
 {
 	padding-top: 6px;
 }
+
+.logout
+{
+	width: 15px;
+	height: 16px;
+	background-image: url('/front/img/logout.png');
+	margin-top: 12px;
+	margin-left: 10px;
+	float: right;
+	cursor: pointer;
+}
