@@ -54,7 +54,7 @@ class Models_Neighbors
 		{
 			$my_buildings = $table
 				->where('user_id', Db_Currents::getUserInfo('id'))
-				->getVector('building_id');
+				->getVector('building_id',0 , array(0));
 		}
 
 
@@ -73,7 +73,7 @@ class Models_Neighbors
 		$buildings = $court_table
 			->where('user_id', Db_Currents::getUserInfo('id'))
 			->where('current_building_id', $my_buildings)
-			->getVector('building_id');
+			->getVector('building_id',0 ,array(0));
 
 		$res = $table
 			->where('user_id', $user_id)

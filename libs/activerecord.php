@@ -511,6 +511,7 @@ abstract class Libs_ActiveRecord
 		{
 			if($this->_display_errors)
 			{
+				pred(debug_backtrace());
 				die(self::$_db->error);
 			}
 
